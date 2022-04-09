@@ -11,11 +11,11 @@ import java.util.concurrent.BlockingQueue;
 
 public class WorkerThread extends ThreadImpl {
 
-    private RC rc;
-    private TxnManager txnManager;
-    private BlockingQueue<Message> queue;
+    protected RC rc;
+    protected TxnManager txnManager;
+    protected BlockingQueue<Message> queue;
 
-    private long thdTxnId = 0;//
+    protected long thdTxnId = 0;//
 
     public WorkerThread(BlockingQueue<Message> queue){
         this.queue = queue;
@@ -76,7 +76,7 @@ public class WorkerThread extends ThreadImpl {
 
     public RC prepare(Message msg) {
         rc = txnManager.validate(); //验证
-        txnManager.setRC(rc);
+        //txnManager.setRC(rc);
         //消息发送
         return  null;
     }

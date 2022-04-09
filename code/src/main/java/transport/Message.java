@@ -3,11 +3,11 @@ package transport;
 import global.MessageType;
 
 public class Message {
-    private String threadId;
-    private String nodeId;
-    private long txnId;//事务id
-    private MessageType type;//消息类型
-    private long returnNodeId;//当前的node_id
+    protected String threadId;
+    protected String nodeId;
+    protected long txnId;//事务id
+    protected MessageType type;//消息类型
+    protected long returnNodeId;//当前的node_id
 
     public String getThreadId() {
         return threadId;

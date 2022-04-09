@@ -1,0 +1,55 @@
+syntax="proto3";
+import "google/protobuf/empty.proto";
+package rpgc;
+option java_multiple_files = true;
+option java_package = "io.grpc.prepare";//生成所在的包
+option java_outer_classname = "prepareMsgProto";//生成的类
+
+service PrepareMsgService{
+  rpc sendPrepareMsg(PrepareRequest) returns (Reply) {}
+}
+
+//要包含一次完整的事务
+message PrepareRequest{
+  int64 txnId = 1;
+  repeated Access access = 2;//一个事务包含多个操作
+
+}
+//一次操作
+message Access{
+  enum AccessType{
+      RD = 0; //读
+      WR = 1; //写
+      XP = 2; //
+      SCAN = 3; //扫描
+  }
+
+}
+//行
+message Row{
+  int64 primaryKey = 1;
+  int64 partId = 2;
+  int64 rowId = 3;
+  string data = 4;//value
+  Table table = 5;
+}
+//表
+message Table{
+  string tableName = 1;
+  int64  tableId = 2;
+}
+//返回类型，client应该收到事务的执行结果
+message Reply{
+//  enum RC{
+//      RCOK = 0; //执行成功
+//      Commit = 1;
+//      Abort = 2;
+//      WAIT = 3;
+//      WAIT_REM = 4; //发送remoteRequest，等待响应
+//      ERROR = 5;
+//      FINISH = 6;
+//      NONE = 7;
+//  }
+//  RC rc = 1;
+  string msg = 1;
+}
